@@ -1,11 +1,9 @@
 import expresss, { Application } from "express";
-import { routes } from "./controllers/routes";
+import router from "./controllers/routes";
 
 const init = (): Application => {
   let app = expresss();
-  routes.forEach((route) => {
-    (app as any)[route.http](route.path, route.handler);
-  });
+  app.use("/api", router);
   return app;
 };
 

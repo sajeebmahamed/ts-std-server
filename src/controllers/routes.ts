@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import express, { Request, Response, Router } from "express";
 import { routes as studentRoutes } from "./student.controller";
 export type Handler = (req: Request, res: Response) => void;
 export interface IRoute {
@@ -24,3 +24,11 @@ export const routes: IRoute[] = [
   },
   ...studentRoutes,
 ];
+
+let router: Router = express.Router();
+
+routes.forEach((route) => {
+  (router as any)[route.http](route.path, route.handler);
+});
+
+export default router;
